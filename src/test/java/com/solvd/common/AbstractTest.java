@@ -6,24 +6,30 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class BaseTest {
+public class AbstractTest {
 
-    protected WebDriver driver;
+//  varable for thread local ,,,
+    private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     @BeforeMethod
     public void setUp() {
         System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
         ChromeOptions options = new ChromeOptions();
         options.setBinary("/path/to/Chromium.app/Contents/MacOS/Chromium");
-        driver = new ChromeDriver(options);
+        WebDriver driver = new ChromeDriver(options);
         driver.manage().window().maximize();
-        driver.get("https://www.example.com");
+        driverThreadLocal.set(driver);
     }
 
     @AfterMethod
     public void tearDown() {
-        if (driver != null) {
-            driver.quit();
+        if (driverThreadLocal.get() != null) {
+            driverThreadLocal.get().quit();
+            driverThreadLocal.remove();
         }
+    }
+
+    protected WebDriver getDriver() {
+        return driverThreadLocal.get();
     }
 }
