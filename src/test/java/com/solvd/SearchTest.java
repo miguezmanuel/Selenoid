@@ -11,10 +11,10 @@ public class SearchTest extends BaseTest {
     @Test
     public void testSearchFunctionality() {
         HomePage homePage = new HomePage(driver);
-        homePage.searchProduct("Laptop");
+        homePage.searchProduct("Harry Potter");
 
         SearchResultsPage searchResultsPage = new SearchResultsPage(driver);
-        Assert.assertTrue(searchResultsPage.isResultListNotEmpty(), "The results list is empty!");
+        Assert.assertTrue(searchResultsPage.isResultListNotEmpty(), "The search results list is empty. No products were found :(");
     }
 
 }
