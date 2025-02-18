@@ -1,22 +1,30 @@
 package com.solvd.common;
 
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
-public class AbstractTest {
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
 
-//  varable for thread local ,,,
+public class AbstractTest {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     @BeforeMethod
-    public void setUp() {
-        System.setProperty("webdriver.chrome.driver", "/path/to/chromedriver");
+    public void setUp() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
-        options.setBinary("/path/to/Chromium.app/Contents/MacOS/Chromium");
-        WebDriver driver = new ChromeDriver(options);
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
+
+        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
+        driver.get("https://www.saucedemo.com/"); // ✅ URL corregida
+        System.out.println("Page loaded: " + driver.getCurrentUrl());
         driver.manage().window().maximize();
         driverThreadLocal.set(driver);
     }
@@ -24,6 +32,12 @@ public class AbstractTest {
     @AfterMethod
     public void tearDown() {
         if (driverThreadLocal.get() != null) {
+            try {
+                File screenshot = ((TakesScreenshot) driverThreadLocal.get()).getScreenshotAs(OutputType.FILE);
+                Files.copy(screenshot.toPath(), new File("screenshot.png").toPath());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             driverThreadLocal.get().quit();
             driverThreadLocal.remove();
         }
@@ -33,3 +47,8 @@ public class AbstractTest {
         return driverThreadLocal.get();
     }
 }
+
+
+
+
+

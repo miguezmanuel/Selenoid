@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-02-18T09:57:41 GMT-03:00" name="Surefire suite" finished-at="2025-02-18T09:57:44 GMT-03:00" duration-ms="2412">
+    <groups>
+    </groups>
+    <test started-at="2025-02-18T09:57:41 GMT-03:00" name="Surefire test" finished-at="2025-02-18T09:57:44 GMT-03:00" duration-ms="2412">
+      <class name="com.solvd.LoginTest">
+        <test-method is-config="true" signature="setUp()[pri:0, instance:com.solvd.LoginTest@4e423aa2]" started-at="2025-02-18T09:57:41 GMT-03:00" name="setUp" finished-at="2025-02-18T09:57:44 GMT-03:00" duration-ms="2232" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setUp -->
+        <test-method signature="testUsernameFieldIsVisible()[pri:0, instance:com.solvd.LoginTest@4e423aa2]" started-at="2025-02-18T09:57:44 GMT-03:00" name="testUsernameFieldIsVisible" finished-at="2025-02-18T09:57:44 GMT-03:00" duration-ms="109" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testUsernameFieldIsVisible -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:com.solvd.LoginTest@4e423aa2]" started-at="2025-02-18T09:57:44 GMT-03:00" name="tearDown" finished-at="2025-02-18T09:57:44 GMT-03:00" duration-ms="56" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
+      </class> <!-- com.solvd.LoginTest -->
+    </test> <!-- Surefire test -->
+  </suite> <!-- Surefire suite -->
+</testng-results>
