@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<browsers>
+    <browser name="chrome">
+        <version number="100.0">
+            <region name="default">
+                <host name="selenoid" port="4444"/>
+            </region>
+        </version>
+    </browser>
+    <browser name="firefox">
+        <version number="125.0">
+            <region name="default">
+                <host name="selenoid" port="4444"/>
+            </region>
+        </version>
+    </browser>
+</browsers>

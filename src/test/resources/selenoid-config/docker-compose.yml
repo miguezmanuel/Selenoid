@@ -25,5 +25,15 @@ services:
       - "8080:8080"
     command: ["--selenoid-uri", "http://selenoid:4444"]
 
-
-
+  ggr:
+    image: aerokube/ggr:latest
+    network_mode: bridge
+    platform: linux/amd64
+    ports:
+      - "4445:4444"
+    volumes:
+      - ~/selenoid/users:/etc/grid-router/users
+      - ~/selenoid/users/users.htpasswd:/etc/grid-router/users.htpasswd
+      - ~/selenoid/quota:/etc/grid-router/quota
+      - "./users:/etc/grid-router/users"
+      - "./quota.xml:/etc/grid-router/quota/quota.xml"

@@ -12,6 +12,8 @@ import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.HashMap;
+import java.util.Map;
 
 public class AbstractTest {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
@@ -19,11 +21,19 @@ public class AbstractTest {
     @BeforeMethod
     public void setUp() throws MalformedURLException {
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--no-sandbox");
-        options.addArguments("--disable-dev-shm-usage");
+        options.setCapability("acceptInsecureCerts", true);
 
-        WebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), options);
-        driver.get("https://www.saucedemo.com/"); // ✅ URL corregida
+        Map<String, Object> selenoidOptions = new HashMap<>();
+        selenoidOptions.put("enableVNC", true);
+        selenoidOptions.put("enableVideo", false);
+        selenoidOptions.put("sessionTimeout", "5m");
+        options.setCapability("selenoid:options", selenoidOptions);
+
+        String remoteUrl = "http://testuser:test@localhost:4445/wd/hub";
+        System.out.println("Connecting to: " + remoteUrl);
+
+        WebDriver driver = new RemoteWebDriver(new URL(remoteUrl), options);
+        driver.get("https://www.saucedemo.com/");
         System.out.println("Page loaded: " + driver.getCurrentUrl());
         driver.manage().window().maximize();
         driverThreadLocal.set(driver);
@@ -47,8 +57,3 @@ public class AbstractTest {
         return driverThreadLocal.get();
     }
 }
-
-
-
-
-
